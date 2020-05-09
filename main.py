@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
 
 from blueprints.hubstaff import hubstaff_blueprint
@@ -19,6 +19,10 @@ def create_app(app_config):
     app.register_error_handler(404, page_not_found)
 
     app.register_blueprint(hubstaff_blueprint)
+
+    @app.route("/favicon.ico")
+    def favicon():
+        return send_from_directory(os.path.join(app.root_path, "static"), "favicon.png")
 
     return app
 
