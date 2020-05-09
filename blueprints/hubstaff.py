@@ -65,7 +65,7 @@ def get_data_from_hubstaff(start_time=None, stop_time=None):
     for project_id, project in projects.items():
         row = [project["name"]]
         for user_id, user in users.items():
-            row.append(time_data[user_id][project_id])
+            row.append(str(timedelta(seconds=time_data[user_id][project_id])))
         table_rows.append(row)
 
     return table_header, table_rows, start_time.isoformat(), stop_time.isoformat()
