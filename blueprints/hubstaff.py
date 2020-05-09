@@ -28,9 +28,10 @@ def get_data_from_hubstaff(start_time=None, stop_time=None):
     if not start_time:
         # Using .now() instead of .utcnow()
         start_of_day = datetime.combine(datetime.now(), time.min)
-        # ToDo: Uncomment below
         start_time = start_of_day - timedelta(days=1)
-        # start_time = start_of_day
+
+    # This is to get day's starting time of user supplemented datetime
+    start_time = datetime.combine(start_time, time.min)
 
     if not stop_time:
         stop_time = start_time + timedelta(days=1)
@@ -93,6 +94,8 @@ def populate_table():
         start=start,
         stop=stop,
         actions=True,
+        start_time=start,
+        stop_time=stop,
     )
 
 
@@ -164,6 +167,8 @@ def send_mail():
         start=start,
         stop=stop,
         actions=False,
+        start_time=start,
+        stop_time=stop,
     )
     mail.send(msg)
 
@@ -175,4 +180,6 @@ def send_mail():
         start=start,
         stop=stop,
         actions=True,
+        start_time=start,
+        stop_time=stop,
     )

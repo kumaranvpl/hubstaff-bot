@@ -3,6 +3,21 @@
 {% block content %}
 <div class="container mx-auto">
     <div class="row">
+        {% if actions %}
+        {% include 'datepicker.html' %}
+        {% endif %}
+    </div>
+    <div class="row">
+        <div class="flex mb-4">
+            <div class="flex-1">
+                <span>Start Time: {{ start_time }}</span>
+            </div>
+            <div class="flex-1">
+                <span>Stop Time: {{ stop_time }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="max-w-sm w-full lg:max-w-full lg:flex">
             <table class="table-auto">
                 <thead>
