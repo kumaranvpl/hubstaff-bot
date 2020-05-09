@@ -4,7 +4,9 @@ import pandas as pd
 import requests
 from flask import Blueprint
 from flask import current_app as app
-from flask import jsonify, request, render_template, make_response
+from flask import jsonify, make_response, render_template, request
+from flask_mail import Mail, Message
+
 
 hubstaff_blueprint = Blueprint("hubstaff_blueprint", __name__)
 
@@ -90,6 +92,7 @@ def populate_table():
         table_rows=table_rows,
         start=start,
         stop=stop,
+        actions=True,
     )
 
 
@@ -127,3 +130,49 @@ def download_data(file_type):
         return resp
 
     return jsonify({"msg": "unknown extension"})
+
+
+@hubstaff_blueprint.route("/send", methods=["GET"])
+def send_mail():
+    start_time = (
+        datetime.strptime(request.args.get("start_time"), "%Y-%m-%dT%H:%M:%S")
+        if request.args.get("start_time")
+        else None
+    )
+    stop_time = (
+        datetime.strptime(request.args.get("stop_time"), "%Y-%m-%dT%H:%M:%S")
+        if request.args.get("stop_time")
+        else None
+    )
+    table_header, table_rows, start, stop = get_data_from_hubstaff(
+        start_time, stop_time
+    )
+
+    mail = Mail()
+    mail.init_app(app)
+
+    msg = Message(
+        f"Hubstaff Bot Data from {start} to {stop}",
+        sender="kumaranvpl@gmail.com",
+        recipients=app.config["MAIL_RECIPIENTS"],
+    )
+    # Not adding msg.body
+    msg.html = render_template(
+        "index.html",
+        table_header=table_header,
+        table_rows=table_rows,
+        start=start,
+        stop=stop,
+        actions=False,
+    )
+    mail.send(msg)
+
+    # Hacky solution. Ideally should use ajax or frontend frameworks to call this.
+    return render_template(
+        "index.html",
+        table_header=table_header,
+        table_rows=table_rows,
+        start=start,
+        stop=stop,
+        actions=True,
+    )

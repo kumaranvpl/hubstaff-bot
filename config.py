@@ -9,6 +9,15 @@ class Config:
     HUBSTAFF_APP_TOKEN = "GZQk6jIePM5JkFcz0j-3ZguSb2qm8Z4RQXamFV9NjQI"
     HUBSTAFF_AUTH_TOKEN = "-BI-txT5DJ3xOclZkajXi6DqvXpSZCWF2CQnmT40WAM"
     HUBSTAFF_API = "https://api.hubstaff.com/v1"
+    # Hardcoding default values. Change this to send mail
+    MAIL_SERVER = "localhost"
+    MAIL_PORT = 25
+    MAIL_USE_TLS = False
+    MAIL_USE_SSL = False
+    MAIL_USERNAME = None
+    MAIL_PASSWORD = None
+    # Hardcoding recipients. Ideally should use frontend to get recipients
+    MAIL_RECIPIENTS = ["hiring2@reef.pl"]
 
 
 class DevelopmentConfig(Config):
