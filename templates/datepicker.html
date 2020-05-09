@@ -112,6 +112,10 @@
             ];
             const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+            // Create selected date value
+            let start = '{{ start| safe }}';
+            start = new Date(`${start}Z`);
+
             function app() {
                 return {
                     showDatepicker: false,
@@ -124,7 +128,10 @@
                     days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 
                     initDate() {
-                        const today = new Date();
+                        // Replace today's date with start date
+                        let today = new Date();
+                        today = start;
+
                         this.month = today.getMonth();
                         this.year = today.getFullYear();
                         this.datepickerValue = new Date(this.year, this.month, today.getDate()).toDateString();

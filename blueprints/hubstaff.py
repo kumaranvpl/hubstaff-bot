@@ -94,8 +94,6 @@ def populate_table():
         start=start,
         stop=stop,
         actions=True,
-        start_time=start,
-        stop_time=stop,
     )
 
 
@@ -167,8 +165,6 @@ def send_mail():
         start=start,
         stop=stop,
         actions=False,
-        start_time=start,
-        stop_time=stop,
     )
     mail.send(msg)
 
@@ -180,6 +176,4 @@ def send_mail():
         start=start,
         stop=stop,
         actions=True,
-        start_time=start,
-        stop_time=stop,
     )
