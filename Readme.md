@@ -20,6 +20,12 @@ Install the requirements
 
 ```pip3 install -r requirements.txt```
 
+## Run test cases
+
+To run pytest test cases with code coverage execute
+
+```pytest ./tests/ --cov=./ --cov-report term-missing```
+
 ## Run flask app
 
 To run the flask app execute either
@@ -29,3 +35,7 @@ To run the flask app execute either
 Or
 
 ```python3 main.py```
+
+## View Dashboard
+
+Please view the dashboard at <http://localhost:5000> after running the app
