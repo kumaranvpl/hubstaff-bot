@@ -177,7 +177,7 @@ def send_mail():
 
     msg = Message(
         f"Hubstaff Bot Data from {start} to {stop}",
-        sender="kumaranvpl@gmail.com",
+        sender=app.config["MAIL_SENDER"],
         recipients=app.config["MAIL_RECIPIENTS"],
     )
     # Not adding msg.body
