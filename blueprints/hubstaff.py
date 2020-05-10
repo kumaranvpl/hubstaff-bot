@@ -11,6 +11,23 @@ from flask_mail import Mail, Message
 hubstaff_blueprint = Blueprint("hubstaff_blueprint", __name__)
 
 
+CACHE = {}
+
+
+def add_to_cache(start, table_header, table_rows):
+    # In a production environment, cache should be in redis(preferred) or memcache
+    # But using global variable to simulate redis in this project
+    global CACHE
+    CACHE[start] = {"table_header": table_header, "table_rows": table_rows}
+
+
+def check_and_retrieve_from_cache(start):
+    if start not in CACHE:
+        return None, None
+
+    return CACHE[start]["table_header"], CACHE[start]["table_rows"]
+
+
 def get_user_time_spent_in_project(user_ids, project_ids, activities):
     time_data = {}
     for user_id in user_ids:
@@ -35,6 +52,10 @@ def get_data_from_hubstaff(start_time=None, stop_time=None):
 
     if not stop_time:
         stop_time = start_time + timedelta(days=1)
+
+    table_header, table_rows = check_and_retrieve_from_cache(start_time.isoformat())
+    if table_header and table_rows:
+        return table_header, table_rows, start_time.isoformat(), stop_time.isoformat()
 
     headers = {
         "App-Token": "GZQk6jIePM5JkFcz0j-3ZguSb2qm8Z4RQXamFV9NjQI",
@@ -67,6 +88,8 @@ def get_data_from_hubstaff(start_time=None, stop_time=None):
         for user_id, user in users.items():
             row.append(str(timedelta(seconds=time_data[user_id][project_id])))
         table_rows.append(row)
+
+    add_to_cache(start_time.isoformat(), table_header, table_rows)
 
     return table_header, table_rows, start_time.isoformat(), stop_time.isoformat()
 
