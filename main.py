@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, jsonify, send_from_directory, redirect, url_for
+from flask import Flask, redirect, send_from_directory, url_for
 from flask_cors import CORS
 
 from blueprints.hubstaff import hubstaff_blueprint

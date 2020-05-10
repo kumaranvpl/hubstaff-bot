@@ -31,3 +31,15 @@ class ProductionConfig(Config):
     SECRET_KEY = (
         b"2 \xd1\x9b\xcarR\x05\xcf]\xfe\x9d\xc5K\x08{'\xa2\xa1\xe3\xc5\r\xef\x1f"
     )
+
+
+class TestingConfig(Config):
+    DEBUG = True
+    TESTING = True
+    ENV = "development"
+
+
+class SingleUseTestingConfig(Config):
+    DEBUG = True
+    TESTING = True
+    ENV = "development"
