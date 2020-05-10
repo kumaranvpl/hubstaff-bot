@@ -1,13 +1,13 @@
 import os
 
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, send_from_directory, redirect, url_for
 from flask_cors import CORS
 
 from blueprints.hubstaff import hubstaff_blueprint
 
 
 def page_not_found(e):
-    return jsonify({"msg": "page not found"})
+    return redirect(url_for("hubstaff_blueprint.populate_table"))
 
 
 def create_app(app_config):
