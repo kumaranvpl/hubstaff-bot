@@ -1,19 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container mx-auto">
+<div class="container mx-auto grid gap-6">
     <div class="row">
         {% if actions %}
         {% include 'datepicker.html' %}
         {% endif %}
     </div>
     <div class="row">
-        <div class="flex mb-4">
-            <div class="flex-1">
-                <span>Start Time: {{ start }}</span>
+        <div class="flex -mx-2">
+            <div class="w-1/4 px-2">
+                <span class="font-bold">Start Time: </span>
+                <span>{{ start }}</span>
             </div>
-            <div class="flex-1">
-                <span>Stop Time: {{ stop }}</span>
+            <div class="w-1/4 px-2">
+                <span class="font-bold">Stop Time: </span>
+                <span>{{ stop }}</span>
             </div>
         </div>
     </div>
